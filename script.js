@@ -2,7 +2,9 @@ const STATUS = {
 	TO_DO: 'To Do',
 	DONE: 'Done',
 	IN_PROGRESS: 'In Progress',
-}
+};
+
+const DEFAULT_STATUS = STATUS.TO_DO;
 
 const list = {
 	'create a new practice task': STATUS.IN_PROGRESS,
@@ -22,7 +24,7 @@ function changeStatus(task, status) {
 
 function addTask(newTask) {
 	if (newTask) {
-		list[newTask] = 'To Do';
+		list[newTask] = DEFAULT_STATUS;
 		console.log('New task added! 👌');
 	} else {
 		console.log('Error! Wrong task! 🤷');
@@ -30,7 +32,7 @@ function addTask(newTask) {
 }
 
 function deleteTask(task) {
-	if (list[task]) {
+	if (task in list) {
 		delete list[task];
 		console.log('The task was deleted! 👌');
 	} else {
@@ -39,39 +41,25 @@ function deleteTask(task) {
 }
 
 function showList() {
-	// ToDO
-	let ToDotasks = '';
-	console.log('Todo:');
+	let toDo = '';
+	let inProgress = '';
+	let done = '';
 
-	for (key in list) {
-		if (list[key] === 'To Do') {
-			console.log(`  ${key},`);
-			ToDotasks += key;
+	for (let key in list) {
+		switch (list[key]) {
+			case STATUS.TO_DO:
+				toDo += key + '\n';
+				break;
+			case STATUS.IN_PROGRESS:
+				inProgress = key + '\n';
+				break;
+			case STATUS.DONE:
+				done += key + '\n';
+				break;
+			default:
+				break;
 		}
 	}
-	if (!ToDotasks) console.log('-');
-
-	// In Progress
-	let InProgressTasks = '';
-	console.log('In Progress:');
-	for (key in list) {
-		if (list[key] === 'In Progress') {
-			console.log(`  ${key},`);
-			InProgressTasks += key;
-		}
-	}
-	if (!InProgressTasks) console.log('-');
-
-	// Done
-	let doneTasks = '';
-	console.log('Done:');
-	for (key in list) {
-		if (list[key] === 'Done') {
-			console.log(`  ${key},`);
-			doneTasks += key;
-		}
-	}
-	if (!doneTasks) console.log('-');
 }
 
 showList();
