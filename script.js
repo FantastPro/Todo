@@ -1,8 +1,14 @@
+const STATUS = {
+	TO_DO: 'To Do',
+	DONE: 'Done',
+	IN_PROGRESS: 'In Progress',
+}
+
 const list = {
-	'create a new practice task': 'In Progress',
-	'make a bed': 'Done',
-	'write a post': 'To Do',
-	'buy some bread': 'To Do',
+	'create a new practice task': STATUS.IN_PROGRESS,
+	'make a bed': STATUS.DONE,
+	'write a post': STATUS.TO_DO,
+	'buy some bread': STATUS.TO_DO,
 };
 
 function changeStatus(task, status) {
