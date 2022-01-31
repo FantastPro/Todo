@@ -14,7 +14,9 @@ const list = {
 };
 
 function changeStatus(task, status) {
-	if (task in list && status) {
+	const isValidStatus = status in STATUS;
+	console.log(isValidStatus);
+	if (task in list) {
 		list[task] = status;
 		console.log('Status changed! 👌');
 	} else {
@@ -22,12 +24,11 @@ function changeStatus(task, status) {
 	}
 }
 
-function addTask(newTask) {
-	if (newTask) {
-		list[newTask] = DEFAULT_STATUS;
-		console.log('New task added! 👌');
+function addTask(task) {
+	if (task in list) {
+		console.log('Such task is already exists 🤷');
 	} else {
-		console.log('Error! Wrong task! 🤷');
+		list[task] = STATUS.IN_PROGRESS;
 	}
 }
 
@@ -36,7 +37,7 @@ function deleteTask(task) {
 		delete list[task];
 		console.log('The task was deleted! 👌');
 	} else {
-		console.log('Error, wrong task! 🤷');
+		console.log("Such task doesn'nt exists 🤷");
 	}
 }
 
@@ -44,22 +45,25 @@ function showList() {
 	let toDo = '';
 	let inProgress = '';
 	let done = '';
+	const noTask = '\n -';
 
-	for (let key in list) {
-		switch (list[key]) {
+	for (let task in list) {
+		switch (list[task]) {
 			case STATUS.TO_DO:
-				toDo += key + '\n';
+				toDo += `\n "${task}",`;
 				break;
 			case STATUS.IN_PROGRESS:
-				inProgress = key + '\n';
+				inProgress += `\n "${task}",`;
 				break;
 			case STATUS.DONE:
-				done += key + '\n';
+				done += `\n "${task}",`;
 				break;
 			default:
 				break;
 		}
 	}
+	console.log(`To Do: ${toDo || noTask}\nIn Progress: ${inProgress || noTask}\nDone: ${done || noTask}`);
 }
 
 showList();
+// changeStatus('write a post', 'TO_DO')
