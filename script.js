@@ -1,7 +1,7 @@
 const STATUS = {
 	TO_DO: 'To Do',
-	DONE: 'Done',
 	IN_PROGRESS: 'In Progress',
+	DONE: 'Done',
 };
 
 const DEFAULT_STATUS = STATUS.TO_DO;
@@ -10,60 +10,50 @@ const list = {
 	'create a new practice task': STATUS.IN_PROGRESS,
 	'make a bed': STATUS.DONE,
 	'write a post': STATUS.TO_DO,
-	'buy some bread': STATUS.TO_DO,
 };
 
 function changeStatus(task, status) {
-	const isValidStatus = status in STATUS;
-	console.log(isValidStatus);
-	if (task in list) {
-		list[task] = status;
-		console.log('Status changed! 👌');
-	} else {
-		console.log('Error! There is no such task or wrong status! 🤷');
-	}
+	if (task in list) list[task] = status;
 }
 
 function addTask(task) {
 	if (task in list) {
-		console.log('Such task is already exists 🤷');
+		return;
 	} else {
-		list[task] = STATUS.IN_PROGRESS;
+		list[task] = DEFAULT_STATUS;
 	}
 }
 
 function deleteTask(task) {
 	if (task in list) {
 		delete list[task];
-		console.log('The task was deleted! 👌');
-	} else {
-		console.log("Such task doesn'nt exists 🤷");
 	}
 }
 
 function showList() {
-	let toDo = '';
-	let inProgress = '';
-	let done = '';
-	const noTask = '\n -';
+	const tasks = {
+		[STATUS.TO_DO]: '',
+		[STATUS.IN_PROGRESS]: '',
+		[STATUS.DONE]: '',
+	};
 
-	for (let task in list) {
-		switch (list[task]) {
-			case STATUS.TO_DO:
-				toDo += `\n "${task}",`;
-				break;
-			case STATUS.IN_PROGRESS:
-				inProgress += `\n "${task}",`;
-				break;
-			case STATUS.DONE:
-				done += `\n "${task}",`;
-				break;
-			default:
-				break;
-		}
+	for (let key in list) {
+		tasks[list[key]] += `  "${key}",\n`;
 	}
-	console.log(`To Do: ${toDo || noTask}\nIn Progress: ${inProgress || noTask}\nDone: ${done || noTask}`);
+
+	console.log(
+		`To Do:
+${tasks[STATUS.TO_DO] || ' - '}
+In Progress:
+${tasks[STATUS.IN_PROGRESS] || ' - '}
+Done:
+${tasks[STATUS.DONE] || ' - '}`
+	);
 }
 
+addTask('buy some groceries');
+addTask('buy some milk at the store');
+addTask('write a book');
+
+changeStatus('write a post', STATUS.IN_PROGRESS);
 showList();
-// changeStatus('write a post', 'TO_DO')
