@@ -25,9 +25,7 @@ function addTask(task) {
 }
 
 function deleteTask(task) {
-	if (task in list) {
-		delete list[task];
-	}
+	delete list[task];
 }
 
 function showList() {
@@ -42,11 +40,11 @@ function showList() {
 	}
 
 	console.log(
-		`To Do:
+		`${STATUS.TO_DO}:
 ${tasks[STATUS.TO_DO] || ' - '}
-In Progress:
+${STATUS.IN_PROGRESS}:
 ${tasks[STATUS.IN_PROGRESS] || ' - '}
-Done:
+${STATUS.DONE}:
 ${tasks[STATUS.DONE] || ' - '}`
 	);
 }
@@ -55,5 +53,5 @@ addTask('buy some groceries');
 addTask('buy some milk at the store');
 addTask('write a book');
 
-changeStatus('write a post', STATUS.IN_PROGRESS);
+changeStatus('write a post', 'In Progress');
 showList();
